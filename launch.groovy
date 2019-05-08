@@ -40,7 +40,12 @@ for(String type : Vitamins.listVitaminTypes()){
 }
 options.put("motors",motorOptions)
 options.put("data",motorData)
-println options
+java.lang.reflect.Type outT = new TypeToken<HashMap<String,Object>>() {
+  }.getType();
+  //chreat the gson object, this is the parsing factory
+Gson gsonout = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+String json =  gsonout.toJson(options, outT)
+println json
 return
 
 
@@ -53,6 +58,7 @@ java.lang.reflect.Type TT_mapStringString = new TypeToken<HashMap<String,HashMap
   }.getType();
   //chreat the gson object, this is the parsing factory
 Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+
 /*
 HashMap<String,HashMap<String,HashMap<String,Object>>> limbData = new HashMap<>()
 for(def limb:base.getAllDHChains() ){
