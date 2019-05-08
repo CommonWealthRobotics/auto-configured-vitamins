@@ -2,6 +2,7 @@
  "requiredTipVelocityMeterPerSec":0.4,
  "requiredTipForceNewtons":10,
  "maximumPrice":500.0,
+  "gearRatio":2.3333,
  "HephaestusArmLimbOne":{
   "min":{
     "basePan": {
