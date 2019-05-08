@@ -12,3 +12,13 @@ while((indicator =MobileBaseCadManager.get( base).getProcesIndictor().get())<1){
 	ThreadUtil.wait(1000)
 }
 
+MobileBaseCadManager manager = MobileBaseCadManager.get(base)
+
+
+manager.generateCad()
+ThreadUtil.wait(1000)
+indicator = 0
+while((indicator =MobileBaseCadManager.get( base).getProcesIndictor().get())<1){
+	println "Re-loading..."+indicator
+	ThreadUtil.wait(1000)
+}
