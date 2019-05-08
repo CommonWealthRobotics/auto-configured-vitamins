@@ -69,6 +69,7 @@ for(def limb:base.getAllDHChains() ){
 		dh.setAlpha( Math.toRadians(data.get("dh-Alpha")))
 		dh.setTheta(Math.toRadians( data.get("dh-Theta")))
 	}
+	limb.getCurrentJointSpaceVector();
 }
 
 
