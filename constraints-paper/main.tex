@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{bera}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{placeins}
+\usepackage[paper=a4paper,margin=1.25in]{geometry}
+\usepackage{bm}
+
+\title{Arm Constraints}
+\author{Kevin Harrington, Ryan Benasutti}
+\date{May 2019}
+
+\newcommand{\code}{\texttt}
+
+\begin{document}
+
+\maketitle
+
+\FloatBarrier
+\section{Arm Constraints}
+
+\FloatBarrier
+\subsection{Features}
+
+The feature matrix of a motor is given by
+\begin{equation}
+    F_m =
+    \begin{bmatrix}
+        \tau_{stall}^{(0)} & \tau_{stall}^{(1)} & \tau_{stall}^{(2)} \\[6pt]
+        \omega_{free}^{(0)} & \omega_{free}^{(1)} & \omega_{free}^{(2)} \\[6pt]
+        P^{(0)} & P^{(1)} & P^{(2)} \\[6pt]
+        M^{(0)} & M^{(1)} & M^{(2)}
+    \end{bmatrix}
+\end{equation}
+
+where $\tau_{stall}^{(i)}$ is the stall torque in Newton-meters for motor $i$, $\omega_{free}^{(i)}$
+is the free speed in radians per second for motor $i$, $P^{(i)}$ is the price of motor $i$, and
+$M^{(i)}$ is the mass in kilograms of motor $i$.
+
+\FloatBarrier
+\subsection{Required Tip Torque}
+
+$F$ is the applied force on the tip (given). $R_i$ is the length of link $i$.
+
+\begin{equation}
+    \boldsymbol{\tau_{stall}}
+    \geq
+    \begin{bmatrix}
+        F \cdot (R_1 + R_2) \\
+        (F \cdot (R_1 + R_2) + (M_1 \cdot G \cdot R_1)) \\
+        F \cdot R_2
+    \end{bmatrix}
+\end{equation}
+
+\FloatBarrier
+\subsection{Required Tip Velocity}
+
+$V$ is the tip velocity (given).
+
+\begin{equation}
+    \boldsymbol{\omega} =
+    \begin{bmatrix}
+        \frac{V_y}{R_1 + R_2} \\[6pt]
+        \frac{V_z}{R_1 + R_2} \\[6pt]
+        \frac{V_z}{R_2}
+    \end{bmatrix}
+\end{equation}
+
+The torque-speed curve of a motor is given by:
+\begin{equation}
+    t(\omega_i) = \tau_{stall} - \frac{\omega_i \cdot \tau_{stall}}{\omega_{free}}
+\end{equation}
+
+We can then describe the minimum required torque ($\boldsymbol{\tau_r}$, given) at the applied speed
+$\boldsymbol{\omega}$.
+\begin{equation}
+    t(\boldsymbol{\omega}) \geq \boldsymbol{\tau_r}
+\end{equation}
+
+\FloatBarrier
+\subsection{Maximum Price}
+
+$P_r$ is the maximum allowable price (given).
+
+\begin{equation}
+    P_r \geq \sum_{i=0}^{2}{P_i}
+\end{equation}
+
+\end{document}
