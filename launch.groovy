@@ -21,7 +21,6 @@ java.lang.reflect.Type TT_mapStringString = new TypeToken<HashMap<String,HashMap
   //chreat the gson object, this is the parsing factory
 Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 HashMap<String,HashMap<String,HashMap<String,Object>>> limbData = new HashMap<>()
-
 for(def limb:base.getAllDHChains() ){
 	String limbName =limb.getScriptingName()
 	ArrayList<DHLink>  chain = limb.getChain().getLinks()
@@ -46,6 +45,12 @@ for(def limb:base.getAllDHChains() ){
 }
 String json =  gson.toJson(limbData, TT_mapStringString)
 println json
+
+String jsonFromFile = ScriptingEngine.codeFromGit("https://github.com/CommonWealthRobotics/auto-configured-vitamins.git", 
+										"result.json")[0]
+println "From file:\r\n"+jsonFromFile										
+HashMap<String,HashMap<String,HashMap<String,Object>>> fileData =  gson.fromJson(jsonFromFile, TT_mapStringString);
+
 
 
 MobileBaseCadManager manager = MobileBaseCadManager.get(base)
