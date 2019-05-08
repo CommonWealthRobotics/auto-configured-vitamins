@@ -49,7 +49,7 @@ println json
 */
 
 String jsonFromFile = ScriptingEngine.codeFromGit("https://github.com/CommonWealthRobotics/auto-configured-vitamins.git", 
-										"result.json")[0]
+										"result2.json")[0]
 println "From file:\r\n"+jsonFromFile										
 HashMap<String,HashMap<String,HashMap<String,Object>>> fileData =  gson.fromJson(jsonFromFile, TT_mapStringString);
 for(def limb:base.getAllDHChains() ){

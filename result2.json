@@ -1,6 +1,7 @@
 {
   "HephaestusArmLimbOne": {
     "basePan": {
+    	"index":0,
       "dh-D": 135.0,
       "motorSize": "hv5932mg",
       "shaftSize": "hv6214mg_6",
@@ -11,6 +12,7 @@
       "motorType": "hobbyServo"
     },
     "elbow": {
+    	"index":2,
       "dh-D": 0.0,
       "motorSize": "hv5932mg",
       "shaftSize": "hv6214mg_6",
@@ -21,6 +23,7 @@
       "motorType": "hobbyServo"
     },
     "baseTilt": {
+    	"index":1,
       "dh-D": 0.0,
       "motorSize": "hv5932mg",
       "shaftSize": "hv6214mg_6",
