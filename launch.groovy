@@ -11,6 +11,32 @@ def base =DeviceManager.getSpecificDevice( "HephaestusArm",{
             null
             )
 })
+
+HashMap<String,List<String>> motorOptions = new HashMap<>()
+HashMap<String,HashMap<String,Object>> motorData = new HashMap<>()
+HashMap<String,Object> options = new HashMap<>()
+for(String type : Vitamins.listVitaminTypes()){
+	if(Vitamins.getMeta(type).get("actuator")){
+		def sizes = Vitamins.listVitaminSizes(type)
+		motorOptions.put(type,sizes)
+		for(def size:sizes){
+			HashMap<String, Object>  vitaminData = Vitamins.getConfiguration( type,size)
+			HashMap<String,Object> data = new HashMap<>()
+			data.put("MaxTorqueNewtonmeters",vitaminData.get("MaxTorqueNewtonmeters"))
+			data.put("MaxFreeSpeedRadPerSec",vitaminData.get("MaxFreeSpeedRadPerSec"))
+			data.put("price",vitaminData.get("price"))
+			data.put("massKg",vitaminData.get("massKg"))
+			motorData.put(type+"-"+size,data)
+		}
+
+	}
+}
+options.put("motors",motorOptions)
+options.put("data",motorData)
+println options
+return
+
+
 double indicator = 0
 while((indicator =MobileBaseCadManager.get( base).getProcesIndictor().get())<1){
 	println "Waiting for cad to get to 1:"+indicator
@@ -49,18 +75,7 @@ String json =  gson.toJson(limbData, TT_mapStringString)
 println json
 */
 
-HashMap<String, Object>  vitaminData = Vitamins.getConfiguration( "hobbyServo","Dynam")
-HashMap<String,List<String>> motorOptions = new HashMap<>()
-HashMap<String,Object> options = new HashMap<>()
-for(String type : Vitamins.listVitaminTypes()){
-	if(Vitamins.getMeta(type).get("actuator")){
-		motorOptions.put(type,Vitamins.listVitaminSizes(type))
-	}
-}
-options.put("motors",motorOptions)
 
-println options
-return
 
 String jsonFromFile = ScriptingEngine.codeFromGit("https://github.com/CommonWealthRobotics/auto-configured-vitamins.git", 
 										"result2.json")[0]
