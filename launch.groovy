@@ -32,6 +32,7 @@ for(def limb:base.getAllDHChains() ){
 		LinkConfiguration conf = limb.getLinkConfiguration(i);
 		String linkName = conf.getName()
 		HashMap<String,Object> data =new HashMap<>()
+		data.put("index",i)
 		data.put("motorType",conf.getElectroMechanicalType())
 		data.put("motorSize", conf.getElectroMechanicalSize() )
 		data.put("shaftType",conf.getShaftType())
@@ -47,6 +48,25 @@ for(def limb:base.getAllDHChains() ){
 String json =  gson.toJson(limbData, TT_mapStringString)
 println json
 */
+
+HashMap<String, Object>  vitaminData = Vitamins.getConfiguration( "hobbyServo","Dynam")
+HashMap<String,List<String>> motorOptions = new HashMap<>()
+HashMap<String,List<String>> shaftOptions = new HashMap<>()
+HashMap<String,HashMap<String,List<String>>> options = new HashMap<>()
+for(String type : Vitamins.listVitaminTypes()){
+	if(Vitamins.getMeta(type).get("shaft")){
+		shaftOptions.put(type,Vitamins.listVitaminSizes(type))
+	}
+	if(Vitamins.getMeta(type).get("actuator")){
+		motorOptions.put(type,Vitamins.listVitaminSizes(type))
+	}
+}
+
+options.put("motors",motorOptions)
+options.put("shafts",shaftOptions)
+
+println options
+return
 
 String jsonFromFile = ScriptingEngine.codeFromGit("https://github.com/CommonWealthRobotics/auto-configured-vitamins.git", 
 										"result2.json")[0]
@@ -75,6 +95,8 @@ for(def limb:base.getAllDHChains() ){
 	limb.getChain().getChain(joint);
 	limb.onJointSpaceUpdate(limb, joint)
 }
+
+
 
 
 MobileBaseCadManager manager = MobileBaseCadManager.get(base)
