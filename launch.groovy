@@ -36,6 +36,10 @@ for(def limb:base.getAllDHChains() ){
 		data.put("motorSize", conf.getElectroMechanicalSize() )
 		data.put("shaftType",conf.getShaftType())
 		data.put("shaftSize",conf.getShaftSize())
+		data.put("dh-D",dh.getD())
+		data.put("dh-A",dh.getR())
+		data.put("dh-Alpha",Math.toDegrees(dh.getAlpha()))
+		data.put("dh-Theta",Math.toDegrees(dh.getTheta()))
 		linkData.put(linkName,data)
 	}
 	limbData.put(limbName,linkData)
