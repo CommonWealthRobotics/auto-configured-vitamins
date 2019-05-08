@@ -50,7 +50,26 @@ String jsonFromFile = ScriptingEngine.codeFromGit("https://github.com/CommonWeal
 										"result.json")[0]
 println "From file:\r\n"+jsonFromFile										
 HashMap<String,HashMap<String,HashMap<String,Object>>> fileData =  gson.fromJson(jsonFromFile, TT_mapStringString);
-
+for(def limb:base.getAllDHChains() ){
+	String limbName =limb.getScriptingName()
+	ArrayList<DHLink>  chain = limb.getChain().getLinks()
+	HashMap<String,HashMap<String,Object>> linkData = fileData.get(limbName)
+	for(int i=0;i<chain.size();i++){
+		DHLink dh = chain.get(i)
+		// Hardware to engineering units configuration
+		LinkConfiguration conf = limb.getLinkConfiguration(i);
+		String linkName = conf.getName()
+		HashMap<String,Object> data =linkData.get(linkName)
+		conf.setElectroMechanicalType(data.get("motorType"))
+		conf.setElectroMechanicalSize(data.get("motorSize" ) )
+		conf.setShaftType(data.get("shaftType"))
+		conf.setShaftSize(data.get("shaftSize"))
+		dh.setDelta(data.get("dh-D"))
+		dh.setRadius(data.get("dh-A"))
+		dh.setAlpha( Math.toRadians(data.get("dh-Alpha")))
+		dh.setTheta(Math.toRadians( data.get("dh-Theta")))
+	}
+}
 
 
 MobileBaseCadManager manager = MobileBaseCadManager.get(base)
