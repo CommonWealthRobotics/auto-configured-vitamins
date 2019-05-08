@@ -51,19 +51,13 @@ println json
 
 HashMap<String, Object>  vitaminData = Vitamins.getConfiguration( "hobbyServo","Dynam")
 HashMap<String,List<String>> motorOptions = new HashMap<>()
-HashMap<String,List<String>> shaftOptions = new HashMap<>()
-HashMap<String,HashMap<String,List<String>>> options = new HashMap<>()
+HashMap<String,Object> options = new HashMap<>()
 for(String type : Vitamins.listVitaminTypes()){
-	if(Vitamins.getMeta(type).get("shaft")){
-		shaftOptions.put(type,Vitamins.listVitaminSizes(type))
-	}
 	if(Vitamins.getMeta(type).get("actuator")){
 		motorOptions.put(type,Vitamins.listVitaminSizes(type))
 	}
 }
-
 options.put("motors",motorOptions)
-options.put("shafts",shaftOptions)
 
 println options
 return
