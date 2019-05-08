@@ -18,17 +18,24 @@ HashMap<String,Object> options = new HashMap<>()
 for(String type : Vitamins.listVitaminTypes()){
 	if(Vitamins.getMeta(type).get("actuator")){
 		def sizes = Vitamins.listVitaminSizes(type)
-		motorOptions.put(type,sizes)
+		def mySizeList = []
 		for(def size:sizes){
 			HashMap<String, Object>  vitaminData = Vitamins.getConfiguration( type,size)
 			HashMap<String,Object> data = new HashMap<>()
-			data.put("MaxTorqueNewtonmeters",vitaminData.get("MaxTorqueNewtonmeters"))
-			data.put("MaxFreeSpeedRadPerSec",vitaminData.get("MaxFreeSpeedRadPerSec"))
-			data.put("price",vitaminData.get("price"))
-			data.put("massKg",vitaminData.get("massKg"))
-			motorData.put(type+"-"+size,data)
+			if(	vitaminData.get("MaxTorqueNewtonmeters")>0 &&
+				vitaminData.get("MaxFreeSpeedRadPerSec")>0&&
+				vitaminData.get("price")>0&&
+				vitaminData.get("massKg")>0
+			){
+				data.put("MaxTorqueNewtonmeters",vitaminData.get("MaxTorqueNewtonmeters"))
+				data.put("MaxFreeSpeedRadPerSec",vitaminData.get("MaxFreeSpeedRadPerSec"))
+				data.put("price",vitaminData.get("price"))
+				data.put("massKg",vitaminData.get("massKg"))
+				motorData.put(type+"-"+size,data)
+				mySizeList.add(size)
+			}
 		}
-
+		motorOptions.put(type,mySizeList)
 	}
 }
 options.put("motors",motorOptions)
