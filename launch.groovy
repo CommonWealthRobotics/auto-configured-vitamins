@@ -12,6 +12,7 @@ def base =DeviceManager.getSpecificDevice( "HephaestusArm",{
             )
 })
 
+Vitamins.setGitRepoDatabase("https://github.com/madhephaestus/Hardware-Dimensions.git")
 HashMap<String,List<String>> motorOptions = new HashMap<>()
 HashMap<String,HashMap<String,Object>> motorData = new HashMap<>()
 HashMap<String,Object> options = new HashMap<>()
@@ -104,10 +105,11 @@ for(def limb:base.getAllDHChains() ){
 		LinkConfiguration conf = limb.getLinkConfiguration(i);
 		String linkName = conf.getName()
 		HashMap<String,Object> data =linkData.get(linkName)
+		HashMap<String, Object>  vitaminData = Vitamins.getConfiguration( data.get("motorType"),data.get("motorSize" ) )
 		conf.setElectroMechanicalType(data.get("motorType"))
 		conf.setElectroMechanicalSize(data.get("motorSize" ) )
-		conf.setShaftType(data.get("shaftType"))
-		conf.setShaftSize(data.get("shaftSize"))
+		conf.setShaftType(vitaminData.get("shaftType"))
+		conf.setShaftSize(vitaminData.get("shaftSize"))
 		dh.setDelta(data.get("dh-D"))
 		dh.setRadius(data.get("dh-A"))
 		dh.setAlpha( Math.toRadians(data.get("dh-Alpha")))
