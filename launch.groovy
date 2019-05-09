@@ -46,7 +46,7 @@ java.lang.reflect.Type outT = new TypeToken<HashMap<String,Object>>() {
 Gson gsonout = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 String json =  gsonout.toJson(options, outT)
 println json
-return
+//return
 
 
 double indicator = 0
