@@ -45,13 +45,14 @@ $M^{(i)}$ is the mass in kilograms of motor $i$.
 \FloatBarrier
 \subsection{Required Tip Torque}
 
-$F$ is the applied force on the tip (given). $R_i$ is the length of link $i$.
+$F$ is the applied force on the tip (given as \texttt{requiredTipForceNewtons}). $R_i$ is the length
+of link $i$.
 
 \begin{equation}
     \boldsymbol{\tau_{stall}}
     \geq
     \begin{bmatrix}
-        F \cdot (R_1 + R_2) \\
+        F \cdot (R_0 + R_1 + R_2) \\
         (F \cdot (R_1 + R_2) + (M_1 \cdot G \cdot R_1)) \\
         F \cdot R_2
     \end{bmatrix}
@@ -60,12 +61,12 @@ $F$ is the applied force on the tip (given). $R_i$ is the length of link $i$.
 \FloatBarrier
 \subsection{Required Tip Velocity}
 
-$V$ is the tip velocity (given).
+$V$ is the tip velocity (given as \texttt{requiredTipVelocityMeterPerSec}).
 
 \begin{equation}
     \boldsymbol{\omega} =
     \begin{bmatrix}
-        \frac{V_y}{R_1 + R_2} \\[6pt]
+        \frac{V_y}{R_0 + R_1 + R_2} \\[6pt]
         \frac{V_z}{R_1 + R_2} \\[6pt]
         \frac{V_z}{R_2}
     \end{bmatrix}
@@ -85,10 +86,15 @@ $\boldsymbol{\omega}$.
 \FloatBarrier
 \subsection{Maximum Price}
 
-$P_r$ is the maximum allowable price (given).
+$P_r$ is the maximum allowable price (given as \texttt{maximumPrice}).
 
 \begin{equation}
     P_r \geq \sum_{i=0}^{2}{P_i}
 \end{equation}
+
+\FloatBarrier
+\subsection{Optimization Goal}
+
+We want to optimize for price (lowest price).
 
 \end{document}
