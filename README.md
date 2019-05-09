@@ -15,7 +15,6 @@ There are two example constratint sets:
 
 ```
 constraints1.json
-and
 constraints2.json
 ```
 
@@ -25,6 +24,5 @@ There are two example data sets:
 
 ```
 result.json
-and
 result2.json
 ```
