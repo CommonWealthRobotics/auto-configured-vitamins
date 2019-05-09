@@ -4,9 +4,7 @@
     	"index":0,
       "dh-D": 135.0,
       "motorSize": "hv5932mg",
-      "shaftSize": "hv6214mg_6",
       "dh-A": 75.0,
-      "shaftType": "hobbyServoHorn",
       "dh-Alpha": -90.0,
       "dh-Theta": 0.0,
       "motorType": "hobbyServo"
@@ -15,9 +13,7 @@
     	"index":2,
       "dh-D": 0.0,
       "motorSize": "hv5932mg",
-      "shaftSize": "hv6214mg_6",
       "dh-A": 169.28,
-      "shaftType": "hobbyServoHorn",
       "dh-Alpha": 0.0,
       "dh-Theta": 90.0,
       "motorType": "hobbyServo"
@@ -25,13 +21,11 @@
     "baseTilt": {
     	"index":1,
       "dh-D": 0.0,
-      "motorSize": "hv5932mg",
-      "shaftSize": "hv6214mg_6",
+      "motorSize": "WPI-gb37y3530-50en",
       "dh-A": 175.0,
-      "shaftType": "hobbyServoHorn",
       "dh-Alpha": 0.0,
       "dh-Theta": 0.0,
-      "motorType": "hobbyServo"
+      "motorType": "roundMotor"
     }
   }
 }
