@@ -27,7 +27,7 @@
 \FloatBarrier
 \subsection{Features}
 
-The feature matrix of a motor is given by
+The feature matrix of a motor module is given by
 \begin{equation}
     F_m =
     \begin{bmatrix}
@@ -43,25 +43,10 @@ is the free speed in radians per second for motor $i$, $P^{(i)}$ is the price of
 $M^{(i)}$ is the mass in kilograms of motor $i$.
 
 \FloatBarrier
-\subsection{Required Tip Torque}
+\subsection{Required Tip Force at Velocity}
 
-$F$ is the applied force on the tip (given as \texttt{requiredTipForceNewtons}). $R_i$ is the length
-of link $i$.
-
-\begin{equation}
-    \boldsymbol{\tau_{stall}}
-    \geq
-    \begin{bmatrix}
-        F \cdot (R_0 + R_1 + R_2) \\
-        (F \cdot (R_1 + R_2) + (M_1 \cdot G \cdot R_1)) \\
-        F \cdot R_2
-    \end{bmatrix}
-\end{equation}
-
-\FloatBarrier
-\subsection{Required Tip Velocity}
-
-$V$ is the tip velocity (given as \texttt{requiredTipVelocityMeterPerSec}).
+$V$ is the tip velocity (given as \texttt{requiredTipVelocityMeterPerSec}). $R_i$ is the length of
+link $i$ (the \texttt{dh-A} parameter).
 
 \begin{equation}
     \boldsymbol{\omega} =
@@ -77,10 +62,20 @@ The torque-speed curve of a motor is given by:
     t(\omega_i) = \tau_{stall} - \frac{\omega_i \cdot \tau_{stall}}{\omega_{free}}
 \end{equation}
 
-We can then describe the minimum required torque ($\boldsymbol{\tau_r}$, given) at the applied speed
-$\boldsymbol{\omega}$.
+The applied torques at the applied force $F$ (given as \texttt{requiredTipForceNewtons}):
 \begin{equation}
-    t(\boldsymbol{\omega}) \geq \boldsymbol{\tau_r}
+    \boldsymbol{\tau_{F}}
+    =
+    \begin{bmatrix}
+        F \cdot (R_0 + R_1 + R_2) \\
+        (F \cdot (R_1 + R_2) + (M_1 \cdot G \cdot R_1)) \\
+        F \cdot R_2
+    \end{bmatrix}
+\end{equation}
+
+We can then describe the minimum required torque at the applied speed $\boldsymbol{\omega}$:
+\begin{equation}
+    t(\boldsymbol{\omega}) \geq \boldsymbol{\tau_F}
 \end{equation}
 
 \FloatBarrier
