@@ -10,6 +10,7 @@
 \usepackage{placeins}
 \usepackage[paper=a4paper,margin=1.25in]{geometry}
 \usepackage{bm}
+\usepackage{amssymb}
 
 \title{Arm Constraints}
 \author{Kevin Harrington, Ryan Benasutti}
@@ -43,40 +44,39 @@ is the free speed in radians per second for motor $i$, $P^{(i)}$ is the price of
 $M^{(i)}$ is the mass in kilograms of motor $i$.
 
 \FloatBarrier
-\subsection{Required Tip Force at Velocity}
+\subsection{Required Tip Velocity and Force Throughout Workspace}
 
-$V$ is the tip velocity (given as \texttt{requiredTipVelocityMeterPerSec}). $R_i$ is the length of
-link $i$ (the \texttt{dh-A} parameter).
+We wish to enforce a minimum reachable tip velocity ($V_{tip}$, given as
+\texttt{requiredTipForceNewtons}) and tip force ($F_{tip}$, given as
+\texttt{requiredTipForceNewtons}) throughout all configurations $\theta \in \mathbb{W}^N$.
 
 \begin{equation}
-    \boldsymbol{\omega} =
-    \begin{bmatrix}
-        \frac{V_y}{R_0 + R_1 + R_2} \\[6pt]
-        \frac{V_z}{R_1 + R_2} \\[6pt]
-        \frac{V_z}{R_2}
-    \end{bmatrix}
+    \forall \theta \in \mathbb{W}^N, J(\theta) \dot{\theta} \geq V_{tip}
+    \label{eq:vtip_constraint}
+\end{equation}
+
+\begin{equation}
+    \forall \theta \in \mathbb{W}^N, J(\theta) \tau \geq F_{tip}
+    \label{eq:ftip_constraint}
+\end{equation}
+
+$\dot{\theta}$ and $\tau$ are linked by the torque-speed curve of a motor,
+\begin{equation}
+    \tau_i = t^{(i)}(\dot{\theta}_i)
 \end{equation}
 
 The torque-speed curve of a motor is given by:
 \begin{equation}
-    t(\omega_i) = \tau_{stall} - \frac{\omega_i \cdot \tau_{stall}}{\omega_{free}}
+    t^{(i)}(\omega) = \tau_{stall}^{(i)} - \frac{\omega \cdot \tau_{stall}^{(i)}}{\omega_{free}^{(i)}}
 \end{equation}
 
-The applied torques at the applied force $F$ (given as \texttt{requiredTipForceNewtons}):
-\begin{equation}
-    \boldsymbol{\tau_{F}}
-    =
-    \begin{bmatrix}
-        F \cdot (R_0 + R_1 + R_2) \\
-        (F \cdot (R_1 + R_2) + (M_1 \cdot G \cdot R_1)) \\
-        F \cdot R_2
-    \end{bmatrix}
-\end{equation}
-
-We can then describe the minimum required torque at the applied speed $\boldsymbol{\omega}$:
-\begin{equation}
-    t(\boldsymbol{\omega}) \geq \boldsymbol{\tau_F}
-\end{equation}
+Idea: Specify $\mathbb{W}^{\prime N} \subset \mathbb{W}^N$ as an arbitrary surface instead of the
+workspace. The underlying observation is that \ref{eq:vtip_constraint} and \ref{eq:ftip_constraint}
+are met inside most of the workspace, so there is no need to evaluate all those configurations; only
+configurations near the surface of the workspace are important. Furthermore, configurations on the
+workspace surface itself are unimportant because the arm has very little manipulability in these
+configurations. No reasonable designer would design an arm to operate at the very edges of its
+workspace, so specifying a surface manually would work better.
 
 \FloatBarrier
 \subsection{Maximum Price}
@@ -84,12 +84,12 @@ We can then describe the minimum required torque at the applied speed $\boldsymb
 $P_r$ is the maximum allowable price (given as \texttt{maximumPrice}).
 
 \begin{equation}
-    P_r \geq \sum_{i=0}^{2}{P_i}
+    P_r \geq \sum_{i}^{N}{P_i}
 \end{equation}
 
 \FloatBarrier
 \subsection{Optimization Goal}
 
-We want to optimize for price (lowest price).
+We want to optimize for price.
 
 \end{document}
