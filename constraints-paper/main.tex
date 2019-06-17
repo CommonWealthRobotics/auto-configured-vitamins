@@ -11,10 +11,11 @@
 \usepackage[paper=a4paper,margin=1.25in]{geometry}
 \usepackage{bm}
 \usepackage{amssymb}
+\usepackage{interval}
 
 \title{Arm Constraints}
 \author{Kevin Harrington, Ryan Benasutti}
-\date{May 2019}
+\date{\today}
 
 \newcommand{\code}{\texttt}
 
@@ -63,13 +64,18 @@ We wish to enforce a minimum reachable tip velocity ($V_{tip}$, given as
 
 $\boldsymbol{\dot{{\theta}}}$ and $\boldsymbol{\tau}$ are linked by the torque-speed curve of a motor,
 \begin{equation}
-    \tau_i = t^{(i)}(\dot{\theta}_i)
+    \tau_j = t^{(i)}(\dot{\theta}_j)
 \end{equation}
 
 The torque-speed curve of a motor is given by:
 \begin{equation}
     t^{(i)}(\omega) = \tau_{stall}^{(i)} - \frac{\omega \cdot \tau_{stall}^{(i)}}{\omega_{free}^{(i)}}
 \end{equation}
+
+When specifying $\boldsymbol{\dot{\theta}}$, any value for $\dot{\theta_j}$
+which satisfies both \ref{eq:vtip_constraint} and \ref{eq:ftip_constraint} and
+is in the range $\interval{-\omega_{free}^{(i)}}{\omega_{free}^{(i)}}$ is
+valid.
 
 Idea: Specify $\mathbb{W}^{\prime N} \subset \mathbb{W}^N$ as an arbitrary surface instead of the
 workspace. The underlying observation is that \ref{eq:vtip_constraint} and \ref{eq:ftip_constraint}
@@ -78,15 +84,6 @@ configurations near the surface of the workspace are important. Furthermore, con
 workspace surface itself are unimportant because the arm has very little manipulability in these
 configurations. No reasonable designer would design an arm to operate at the very edges of its
 workspace, so specifying a surface manually would work better.
-
-\FloatBarrier
-\subsection{Maximum Price}
-
-$P_r$ is the maximum allowable price (given as \texttt{maximumPrice}).
-
-\begin{equation}
-    P_r \geq \sum_{i}^{N}{P_i}
-\end{equation}
 
 \FloatBarrier
 \subsection{Optimization Goal}
