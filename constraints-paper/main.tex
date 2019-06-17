@@ -47,18 +47,25 @@ $M^{(i)}$ is the mass in kilograms of motor $i$.
 \FloatBarrier
 \subsection{Required Tip Velocity and Force Throughout Workspace}
 
+$\mathbb{W}^N$ is the workspace of the arm. The tip velocity and tip force
+constraints below will be met inside most of the workspace if they are met near
+the edges. Configurations on the workspace surface itself are unimportant
+because the arm has very little manipulability in these configurations. We
+define $\mathbb{W}^{\prime N} \subset \mathbb{W}^N$ as a surface offset from
+the edge of the workspace.
+
 We wish to enforce a minimum reachable tip velocity ($V_{tip}$, given as
 \texttt{requiredTipForceNewtons}) and tip force ($F_{tip}$, given as
 \texttt{requiredTipForceNewtons}) throughout all configurations $\boldsymbol{\theta} \in
 \mathbb{W}^N$.
 
 \begin{equation}
-    \forall \boldsymbol{\theta} \in \mathbb{W}^N, J(\boldsymbol{\theta}) \boldsymbol{\dot{\theta}} \geq V_{tip}
+    \forall \boldsymbol{\theta} \in \mathbb{W}^{\prime N}, J(\boldsymbol{\theta}) \boldsymbol{\dot{\theta}} \geq V_{tip}
     \label{eq:vtip_constraint}
 \end{equation}
 
 \begin{equation}
-    \forall \boldsymbol{\theta} \in \mathbb{W}^N, J(\boldsymbol{\theta}) \boldsymbol{\tau} \geq F_{tip}
+    \forall \boldsymbol{\theta} \in \mathbb{W}^{\prime N}, J(\boldsymbol{\theta}) \boldsymbol{\tau} \geq F_{tip}
     \label{eq:ftip_constraint}
 \end{equation}
 
@@ -76,14 +83,6 @@ When specifying $\boldsymbol{\dot{\theta}}$, any value for $\dot{\theta_j}$
 which satisfies both \ref{eq:vtip_constraint} and \ref{eq:ftip_constraint} and
 is in the range $\interval{-\omega_{free}^{(i)}}{\omega_{free}^{(i)}}$ is
 valid.
-
-Idea: Specify $\mathbb{W}^{\prime N} \subset \mathbb{W}^N$ as an arbitrary surface instead of the
-workspace. The underlying observation is that \ref{eq:vtip_constraint} and \ref{eq:ftip_constraint}
-are met inside most of the workspace, so there is no need to evaluate all those configurations; only
-configurations near the surface of the workspace are important. Furthermore, configurations on the
-workspace surface itself are unimportant because the arm has very little manipulability in these
-configurations. No reasonable designer would design an arm to operate at the very edges of its
-workspace, so specifying a surface manually would work better.
 
 \FloatBarrier
 \subsection{Optimization Goal}
