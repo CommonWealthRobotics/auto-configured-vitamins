@@ -13,7 +13,7 @@
 
 \title{Arm Constraints}
 \author{Kevin Harrington, Ryan Benasutti}
-\date{May 2019}
+\date{\today}
 
 \newcommand{\code}{\texttt}
 
@@ -44,14 +44,20 @@ $P^{(i)}$ is the price of motor $i$, and $M^{(i)}$ is the mass in kilograms of
 motor $i$.
 
 \FloatBarrier
-\subsection{Required Tip Force at Velocity}
+\subsection{Required Tip Force and Velocity}
 
 $V$ is the tip velocity (given as \texttt{requiredTipVelocityMeterPerSec}). $F$
 is the tip force (given as \texttt{requiredTipForceNewtons}). $R_j$ is the r
-parameter of link $j$ (the \texttt{dh-A} parameter).
+parameter of link $j$ (the \texttt{dh-A} parameter). The arm is mounted $90
+\deg$ off vertical.
+
+The torque-speed curve of a motor is given by:
+\begin{equation}
+    \omega_i(\tau; \tau_{stall}^{(i)}, \omega_{free}^{(i)}) = \frac{(\tau_{stall}^{(i)} - \tau)\omega_{free}^{(i)}}{\tau_{stall}^{(i)}}
+\end{equation}
 
 \begin{equation}
-    \tau_1 \geq F(R_1 + R_2 + R_3)
+    \tau_1 \geq F(R_1 + R_2 + R_3) + G(M_2 R_1 + M_3 (R_1 + R_2))
 \end{equation}
 
 \begin{equation}
@@ -63,15 +69,15 @@ parameter of link $j$ (the \texttt{dh-A} parameter).
 \end{equation}
 
 \begin{equation}
-    \omega_1 \geq \frac{V}{R_1 + R_2 + R_3}
+    \omega_1(\tau_1) \geq \frac{V}{R_1 + R_2 + R_3}
 \end{equation}
 
 \begin{equation}
-    \omega_2 \geq \frac{V}{R_2 + R_3}
+    \omega_2(\tau_2) + \omega_3(\tau_3) \geq \frac{V}{R_2 + R_3}
 \end{equation}
 
 \begin{equation}
-    \omega_3 \geq \frac{V}{R_3}
+    \omega_3(\tau_3) \geq \frac{V}{R_3}
 \end{equation}
 
 \FloatBarrier
