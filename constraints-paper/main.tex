@@ -35,7 +35,6 @@ The feature matrix of a motor module is given by
         \omega_{free}^{(1)} & \omega_{free}^{(2)} & & \omega_{free}^{(N)} \\[6pt]
         P^{(1)} & P^{(2)} & \cdots & P^{(N)} \\[6pt]
         M^{(1)} & M^{(2)} & & M^{(N)} \\[6pt]
-        \omega^{\prime (1)} & \omega^{\prime (2)} & & \omega^{\prime (N)} \\[6pt]
         G^{(1)} & G^{(2)} & & G^{(N)}
     \end{bmatrix}
 \end{equation}
@@ -43,9 +42,7 @@ The feature matrix of a motor module is given by
 where $\tau_{stall}^{(i)}$ is the stall torque in Newton-meters for motor $i$,
 $\omega_{free}^{(i)}$ is the free speed in radians per second for motor $i$,
 $P^{(i)}$ is the price of motor $i$ in USD, $M^{(i)}$ is the mass in kilograms
-of motor $i$, $\omega^{\prime (i)}$ is the precomputed term
-$\frac{\omega_{free}^{(i)}}{\tau_{stall}^{(i)}}$, and $G^{(i)}$ is the gear
-ratio on motor $i$.
+of motor $i$, and $G^{(i)}$ is the gear ratio on motor $i$.
 
 \FloatBarrier
 \subsection{Required Tip Force and Velocity}
@@ -53,11 +50,6 @@ ratio on motor $i$.
 $V$ is the tip velocity (\texttt{Limb.tipVelocity}). $F$ is the tip force
 (\texttt{Limb.tipForce}). $R_j$ is the r parameter of link $j$
 (\texttt{Link.dhParam.r}). The arm is mounted $90 \deg$ off vertical.
-
-The torque-speed curve of a motor is given by:
-\begin{equation}
-    \omega_i(\tau; \tau_{stall}^{(i)}, \omega^{\prime (i)}) = (\tau_{stall}^{(i)} - \tau) \cdot \omega^{\prime (i)}
-\end{equation}
 
 \begin{equation}
     \tau_{stall 1} \geq F(R_1 + R_2 + R_3) + G(M_2 R_1 + M_3 (R_1 + R_2))
@@ -81,6 +73,10 @@ The torque-speed curve of a motor is given by:
 
 \begin{equation}
     \omega_{free 3} \geq \frac{V}{R_3}
+\end{equation}
+
+\begin{equation}
+    R_1 + R_2 + R_3 = 400
 \end{equation}
 
 \FloatBarrier
